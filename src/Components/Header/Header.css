@@ -1,0 +1,65 @@
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+}
+
+.logo-header {
+    height: 5em;
+    width: 6em;
+}
+
+.btn-header {
+    padding: 5px 10px;
+    border-radius: 61px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 1.4em;
+    line-height: 16px;
+    text-align: center;
+}
+
+.btn-header.light:hover,
+.btn-header.dark:hover {
+    background-color: #5ed7c6;
+    cursor: pointer;
+    border: 1px solid #5ed7c6;
+}
+
+.btn-header.dark:hover {
+    text-shadow: -0.5px 0 rgba(82, 76, 76, 0.644), 0 0.5px rgba(97, 84, 84, 0.534), 0.5px 0 rgba(112, 91, 91, 0.521), 0 -0.5px rgba(117, 98, 98, 0.575);
+}
+
+.btn-header.light {
+    color: #6809e1;
+    border: 1.8px solid #6809e1;
+    background-color: #ffff;
+}
+
+.btn-header.dark {
+    color: #ffff;
+    border: 1.7px solid #ffff;
+    background-color: #363434;
+}
+
+
+@media (min-width: 600px) {
+    .header {
+        padding: 15px 15px;
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    .logo-header {
+        height: 7em;
+        width: 9em;
+    }
+
+    .btn-header {
+        font-size: 1.6em;
+        padding: 15px 30px;
+    }
+}

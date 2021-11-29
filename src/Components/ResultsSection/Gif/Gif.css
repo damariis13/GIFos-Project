@@ -1,0 +1,14 @@
+
+.gif-img {
+    width: 250px;
+    height: 250px;
+    padding: 15px 0px;
+}
+
+@media (min-width: 600px) {
+    .gif-container {
+        width: 33.3%;
+        height: auto;
+        text-align: center;
+    }
+}

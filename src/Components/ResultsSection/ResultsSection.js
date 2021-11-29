@@ -1,25 +1,28 @@
 import React from "react";
 import "./ResultsSection.css";
+import  Gif  from "./Gif/Gif";
+import { useContext } from "react";
+import { ThemeContext } from "../Context/ThemeContext";
 
 
-function ResultsSection({trend, displayTrend}) {
+function ResultsSection({dataGif}) {
+    const { darkTheme } = useContext(ThemeContext);
     return (
-        <div className="gallery-gif"> 
-        <h2>Resultados de la busqueda</h2>
-        
-        {/* {trend.map((item) => {
+        <div className={`results-section ${darkTheme ? "dark" : "light"}`}>
+        <div>
+        <ol className={`gallery-gif ${darkTheme ? "dark" : "light"}`}>
+         {dataGif.map((item) => {
                 return (
-                    <div className="gif-container">
-                    <a href={link} target="_blank" rel="noreferrer">
-                      <img className="gif-img" src={url} title={title} alt={alt} />
-                    </a>
-                    </div>
-                    <div key={item.id}>
-                    <img src={item.images.fixed_height.url} />
-                    </div>
-                )
-            })
-        } */}
+                    <Gif
+                        key={item.id}
+                        url={item.images.downsized_medium.url}
+                        alt={item.title}
+                        link={item.url}
+                    />
+                );
+        })}   
+        </ol>
+        </div>
         </div>
         
         

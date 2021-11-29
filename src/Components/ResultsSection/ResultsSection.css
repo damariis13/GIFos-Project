@@ -1,0 +1,40 @@
+
+.results-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;  
+}
+
+.gallery-gif.light {
+    background-color: #E7E7E7;
+}
+
+.gallery-gif.dark {
+    background-color: #212121;
+}
+
+@media (max-width: 599px) {
+    .gallery-gif {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 0px;
+    width: 100vw;
+    }
+}
+    
+
+@media (min-width: 600px) {
+    .gallery-gif {
+        width: 100%;
+        max-width: 900px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        padding: 50px 0px;
+    }
+}

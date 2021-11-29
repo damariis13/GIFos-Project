@@ -1,12 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { API_KEY, API_URL, RESOURCES } from "./Utils/constants";
 import Header from './Components/Header/Header';
 import ResultsSection from "./Components/ResultsSection/ResultsSection";
 import SearchSection from './Components/SearchSection/SearchSection';
+import { ThemeContext } from "./Components/Context/ThemeContext";
 import './App.css';
 
 function App() {
-const [trending, setTrending] = useState([]);
+
+  const {darkTheme} = useContext(ThemeContext);
+  
+  const [dataGif, setDataGif] = useState([]);
+  const [inputSearch, setInputSearch] = useState("");
+  const [searchBtn, setSearchBtn] = useState(false);
+
+  const handleChangeInput = (e) => {
+    setInputSearch(e.target.value);
+  };
+
+  const handleSubmit = (e) => { 
+    e.preventDefault();
+    setInputSearch("");
+    setSearchBtn(false);
+  }
 
 useEffect(() => {
   // Expresion de una funcion asincrónica asignada a una variable
@@ -18,7 +34,7 @@ useEffect(() => {
         const data = await response.json();
 
         // Setteamos el array de trending
-        setTrending(data.data);
+        setDataGif(data.data);
     } catch (err) {
       console.error(err);
     }
@@ -26,25 +42,37 @@ useEffect(() => {
   getTrendingGifs();
 }, [])
 
+const getGifs = (inputSearch) => {
+  fetch(`${API_URL}${RESOURCES.SEARCH}?api_key=${API_KEY}&q=${inputSearch}&limit=12`)
+  .then(response => response.json())
+  .then((data) => {
+    setDataGif(data.data);
+    setSearchBtn(false);
+  })
+  .catch(error => console.error(error));
+};
+  useEffect(() => {
+      if(searchBtn) {
+      getGifs(inputSearch);
+      } 
+    }, [searchBtn, inputSearch]);
+
   return (
-    <div className="App">
+    <div className={`App ${darkTheme ? "dark" : "light"}`}>
         <Header />
-        <SearchSection />
+        <SearchSection 
+          handleChange={handleChangeInput}
+          handleSubmit={handleSubmit}
+          input={inputSearch}
+          displayInput={setInputSearch}
+          displaySearch={setSearchBtn}
+          search={searchBtn}
+
+        />
         <ResultsSection 
-        trend={trending}
-        displayTrend={setTrending} />
-        {trending.map((item) => {
-                return (
-                    // <div className="gif-container">
-                    // <a href={link} target="_blank" rel="noreferrer">
-                    //   <img className="gif-img" src={url} title={title} alt={alt} />
-                    // </a>
-                    // </div>
-                    <div key={item.id}>
-                    <img src={item.images.fixed_height.url} />
-                    </div>
-                );
-        })} 
+        dataGif={dataGif}
+        displayDataGif={setDataGif}
+         />
     </div>
   );
 }
