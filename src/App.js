@@ -18,6 +18,10 @@ function App() {
     setInputSearch(e.target.value);
   };
 
+  const handleClick = (searchBtn) => {
+    setSearchBtn(!searchBtn);
+}
+
   const handleSubmit = (e) => { 
     e.preventDefault();
     setInputSearch("");
@@ -52,10 +56,27 @@ const getGifs = (inputSearch) => {
   .catch(error => console.error(error));
 };
   useEffect(() => {
-      if(searchBtn) {
-      getGifs(inputSearch);
+      if(searchBtn === true) {
+      setDataGif(inputSearch);
       } 
     }, [searchBtn, inputSearch]);
+
+
+useEffect(() => {
+  let petition = fetch(
+    `${API_URL}${RESOURCES.AUTOCOMPLETE}?api_key=${API_KEY}&q=${setInputSearch}&limit=5`
+    );
+
+  petition.then((res) => {
+    return res.json();
+  })
+  .then((res) => { 
+    console.log(res);
+    res.data.forEach((item) => {
+      console.log(item.title);
+    }); 
+  });
+}, [setInputSearch]);
 
   return (
     <div className={`App ${darkTheme ? "dark" : "light"}`}>
@@ -67,6 +88,7 @@ const getGifs = (inputSearch) => {
           displayInput={setInputSearch}
           displaySearch={setSearchBtn}
           search={searchBtn}
+          handleClick={handleClick}
 
         />
         <ResultsSection 
