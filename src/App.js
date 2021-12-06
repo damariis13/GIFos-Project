@@ -24,6 +24,7 @@ function App() {
 
   const handleSubmit = (e) => { 
     e.preventDefault();
+    getGifs(inputSearch);
     setInputSearch("");
     setSearchBtn(false);
   }
@@ -55,11 +56,6 @@ const getGifs = (inputSearch) => {
   })
   .catch(error => console.error(error));
 };
-  useEffect(() => {
-      if(searchBtn === true) {
-      setDataGif(inputSearch);
-      } 
-    }, [searchBtn, inputSearch]);
 
 
 useEffect(() => {
@@ -84,7 +80,7 @@ useEffect(() => {
         <SearchSection 
           handleChange={handleChangeInput}
           handleSubmit={handleSubmit}
-          input={inputSearch}
+          inputSearch={inputSearch}
           displayInput={setInputSearch}
           displaySearch={setSearchBtn}
           search={searchBtn}
