@@ -5,9 +5,7 @@ import searchIcon from "../../imgs/icon-search-mod-noc.svg";
 import { ThemeContext } from "../Context/ThemeContext";
 import {useContext} from "react";
 
-function SearchSection({inputSearch, handleChangeInput, handleClick, handleSubmit}) {
-
-    
+function SearchSection({inputSearch, handleChange, handleClick, handleSubmit}) {
 
     const { darkTheme } = useContext(ThemeContext);
     return (
@@ -20,8 +18,8 @@ function SearchSection({inputSearch, handleChangeInput, handleClick, handleSubmi
                 className={`search-input ${darkTheme ? "dark" : "light"}`} 
                 type="text" 
                 placeholder="Buscar Gifs"
-                value= {inputSearch}
-                onChange={handleChangeInput}
+                value={inputSearch}
+                onChange={handleChange}
                 autoComplete=""/>
                 <button onClick={handleClick} type="submit" className={`search-btn ${darkTheme ? "dark" : "light"}`}>
                    <img className="search-icon" src={searchIcon} alt="searchIcon"></img>
