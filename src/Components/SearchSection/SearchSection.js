@@ -7,7 +7,32 @@ import searchIconBtn from "../../imgs/icon-search.svg"
 import { ThemeContext } from "../Context/ThemeContext";
 import {useContext} from "react";
 
-function SearchSection({autocomplete, inputSearch, handleChange, handleClickBtn, handleSubmit, getGifs, handleClick, displayInput}) {
+
+function ResultMessage({ displayDataGif, setResults, results, dataGif }) {
+    if (displayDataGif.length > 0) {
+      return "Resultados de la búsqueda";
+    }
+    if (displayDataGif.length > 0 && results > 0) {
+      return "Resultados de la búsqueda";
+    }
+    if (dataGif.length === 0) {
+      return "Empieza tu búsqueda";
+    }
+  };
+
+function SearchSection({
+    autocomplete, 
+    inputSearch, 
+    handleChange, 
+    handleClickBtn, 
+    handleSubmit, 
+    results, 
+    handleClick, 
+    displayInput, 
+    dataGif,
+    displayDataGif,
+    setResults,
+}) { 
 
     
 
@@ -44,12 +69,8 @@ function SearchSection({autocomplete, inputSearch, handleChange, handleClickBtn,
                 >
                     {autocomplete &&
                         autocomplete.map((gif) => {
-                            const handleAutocomplete = () => {
-                                getGifs(gif.name);
-                                displayInput("")
-                            }
                             return (
-                                <li key={gif.name} onClick={handleAutocomplete}>
+                                <li key={gif.name} onClick={() => displayInput(gif.name)}>
                                 <img className="search-icon" src={searchIcon} alt="search-icon" />
                                 {gif.name}
                                 </li>
@@ -58,8 +79,9 @@ function SearchSection({autocomplete, inputSearch, handleChange, handleClickBtn,
                     }
                 </ul>
             </div>
-               
-            <h2 className={`results-subtitle ${darkTheme ? "dark" : "light"}`} >Resultados de la búsqueda</h2>
+            <h2 className={`result-title ${darkTheme ? "dark" : "light"}`}>
+            <ResultMessage dataGif={dataGif} displayDataGif={displayDataGif} results={results} setResults={setResults}></ResultMessage>
+            </h2>
         </div> 
     )
 }

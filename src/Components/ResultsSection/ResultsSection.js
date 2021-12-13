@@ -5,10 +5,11 @@ import { useContext } from "react";
 import { ThemeContext } from "../Context/ThemeContext";
 
 
-function ResultsSection({dataGif}) {
+function ResultsSection({dataGif, results}) {
     const { darkTheme } = useContext(ThemeContext);
     return (
-        <div className={`results-section ${darkTheme ? "dark" : "light"}`}>
+        <div>
+           <div className={`results-section ${darkTheme ? "dark" : "light"}`}>
         <div>
         <ol className={`gallery-gif ${darkTheme ? "dark" : "light"}`}>
          {dataGif.map((item) => {
@@ -24,8 +25,18 @@ function ResultsSection({dataGif}) {
         </ol>
         </div>
         </div>
-        
-        
+        <div>
+            {results === 0 && (
+                <div className="no-results">
+                <p className="no-results-text">
+                Lo sentimos, no encontramos lo que buscas.
+                </p>
+                <p className="no-results-text">¡Inténtalo de nuevo!</p>
+                </div>
+            )}
+        </div> 
+        </div>
+           
     )
 }
 

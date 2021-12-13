@@ -11,6 +11,7 @@ function App() {
   const {darkTheme} = useContext(ThemeContext);
   const [autocomplete, setAutocomplete] = useState([]);
   const [dataGif, setDataGif] = useState([]);
+  const [results, setResults] = useState(null);
   const [inputSearch, setInputSearch] = useState("");
   const [searchBtn, setSearchBtn] = useState(false);
 
@@ -57,14 +58,16 @@ const getGifs = () => {
   .then((data) => {
     setDataGif(data.data);
     setSearchBtn(false);
+    // numero de resultados al buscar
+    setResults(data.pagination.count);
   })
   .catch(error => console.error(error));
 };
 
 
- useEffect(() => {
+ useEffect((inputSearch) => {
    if(searchBtn) {
-     getGifs(inputSearch);
+    getGifs(inputSearch);
    }
  }, [inputSearch, searchBtn]);
 
@@ -101,16 +104,15 @@ const getGifs = () => {
           handleClick={handleClick}
           inputSearch={inputSearch}
           displayInput={setInputSearch}
-          displaySearch={setSearchBtn}
-          search={searchBtn}
           handleClickBtn={handleClickBtn}
           autocomplete={autocomplete}
-          setAutocomplete={setAutocomplete}
-          getGifs={getGifs}
+          dataGif={dataGif}
+          displayDataGif={setDataGif}
+          setResults={setResults}
         />
         <ResultsSection 
         dataGif={dataGif}
-        displayDataGif={setDataGif}
+        results={results}
          />
     </div>
   );
