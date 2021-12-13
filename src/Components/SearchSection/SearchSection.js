@@ -1,11 +1,13 @@
 import React from "react";
 import "./SearchSection.css";
 import ilustraHeader from "../../imgs/ilustra_header.svg";
+import iconX from "../../imgs/close-svgrepo-com.svg";
 import searchIcon from "../../imgs/icon-search-mod-noc.svg";
+import searchIconBtn from "../../imgs/icon-search.svg"
 import { ThemeContext } from "../Context/ThemeContext";
 import {useContext} from "react";
 
-function SearchSection({inputSearch, handleChangeInput, handleClick, handleSubmit}) {
+function SearchSection({autocomplete, inputSearch, handleChange, handleClickBtn, handleSubmit, getGifs, handleClick, displayInput}) {
 
     
 
@@ -21,13 +23,42 @@ function SearchSection({inputSearch, handleChangeInput, handleClick, handleSubmi
                 type="text" 
                 placeholder="Buscar Gifs"
                 value= {inputSearch}
-                onChange={handleChangeInput}
+                onChange={handleChange}
                 autoComplete=""/>
-                <button onClick={handleClick} type="submit" className={`search-btn ${darkTheme ? "dark" : "light"}`}>
-                   <img className="search-icon" src={searchIcon} alt="searchIcon"></img>
+                {inputSearch.length > 0 && (
+                    <img
+                    className="close-icon"
+                    src={iconX}
+                    alt="close-icon"
+                    onClick={handleClick}
+                    />
+                )}
+                <button onClick={handleClickBtn} type="submit" className={`search-btn ${darkTheme ? "dark" : "light"}`}>
+                   <img className="search-icon-btn" src={searchIconBtn} alt="searchIcon"></img>
                 </button> 
                 </form>
+
+                <ul
+                className={`${autocomplete.length > 0 && "autocomplete"}`}
+                onClick={handleClickBtn}
+                >
+                    {autocomplete &&
+                        autocomplete.map((gif) => {
+                            const handleAutocomplete = () => {
+                                getGifs(gif.name);
+                                displayInput("")
+                            }
+                            return (
+                                <li key={gif.name} onClick={handleAutocomplete}>
+                                <img className="search-icon" src={searchIcon} alt="search-icon" />
+                                {gif.name}
+                                </li>
+                                );
+                        })
+                    }
+                </ul>
             </div>
+               
             <h2 className={`results-subtitle ${darkTheme ? "dark" : "light"}`} >Resultados de la búsqueda</h2>
         </div> 
     )

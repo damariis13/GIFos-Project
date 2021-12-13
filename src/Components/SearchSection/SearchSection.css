@@ -3,6 +3,8 @@
     display: flex;
     flex-direction: column;
     padding: 15px 0px;
+    width: 70%;
+    margin: 0 auto;
 }
 
 .search-elements {
@@ -10,27 +12,84 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    position: relative; 
+    overflow: hidden;
 }
 
 .search-input {
-    border: 1px solid #121212;
+    border: 2px solid #121212;
     border-radius: 61px 0px 0px 61px;
-    padding: 8px 10px;
+    padding: 8px 15px;
+    width: 100%;
+    height: 52px;
     margin-top: -1px;
-    width: 70%;
+    font-size: 1.6em;
+}
+
+.close-icon {
+    position: absolute;
+    right: 470px;
+    width: 35px;
+    cursor: pointer;
+}
+
+input:focus {
+    outline: none;
+}
+
+.autocomplete {
+    border-radius: 30px;
+    border: 1px solid #572ee5;
+    width: 320px;
+    height: 180px;
+    background-color: #fff;
+    position: absolute;    
+}
+
+li {
+    height: 35px;
+    width: 320px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    padding-left: 20px;
+    font-family: "Roboto", sans-serif;
+    font-size: 1.6em;
+    color: #3f3f3f;
+}
+
+li:first-child {
+    margin-top: -0.8px;
+    border-radius: 30px 30px 0px 0px;
+}
+
+li:last-child {
+    border-radius: 0px 0px 30px 30px;
+    height: 39px;
+}
+
+li > .search-icon {
+    padding-right: 10px;
+}
+
+li:hover {
+    background-color: #3130336c;
+    color: #fff;
+    cursor: pointer;
 }
 
 .search-input.dark {
-    border: 1px solid #ffff;
+    border: 1.5px solid #ffff;
     background-color: #363434;
     font-weight: 400;
     color: #ffff;
     font-family: sans-serif;
     margin-top: -1px;
+    padding: 15px 30px;
 }
 
 .search-btn {
-    padding: 5px 10px;
+    padding: 14px 30px;
     border-radius: 0px 61px 61px 0px;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
@@ -38,18 +97,19 @@
     font-size: 1.4em;
     background-color: #572EE5;
     border: none;
-    margin-top: -0.5px;
-    width: 15%;
+    margin-top: -1.2px;
+    border: 1px solid #572EE5;
 }
+
 
 .search-btn:hover {
     cursor: pointer;
 }
 
 .search-btn.dark {
-    border: 1px solid #ffff;
+    border: 1.5px solid #ffff;
     margin-top: -1px;
-    padding: 12px 0px;
+    padding: 14px 10px;
 }
 
 h1, h2 {
@@ -67,6 +127,7 @@ h1.dark, h2.dark {
     color: #ffff;
 }
 
+
 @media (min-width: 600px) {
     .search-section {
         width: 50%;
@@ -78,6 +139,12 @@ h1.dark, h2.dark {
     .img-search {
         width: 80%;
         margin: 0 auto;
+    }
+
+    .close-icon {
+        left: 590px;
+        position: absolute;
+        width: 4%;
     }
 
     h1 {
@@ -93,17 +160,82 @@ h1.dark, h2.dark {
     }
 
     .search-input {
-        width: 70%;
-        padding: 14px 20px;
+        width: 600px;
+        max-width: 610px;
+        height: 57px;
+        padding: 14px 25px;
         font-size: 1.9em;
-        margin-top: -1.5px;
+        margin-top: -1px;
+    }
+
+    .search-input.dark {
+        width: 600px;
+        max-width: 610px;
+        height: 55px;
+        padding: 15px 25px;
+        font-size: 1.9em;
+        margin-top: 0.5px;
     }
 
     .search-btn {
         font-size: 1.9em;
-        padding: 15px 15px;
-        margin-top: -1.2px;
+        height: 60px;
+        margin-top: -2px;
+        padding: 15px 30px;
         text-align: center;
+        border: none;
+    }
+
+    .search-btn.dark {
+        font-size: 1em;
+        height: 55px;
+        width: 90px;
+        padding: 15px 15px;
+        margin-top: 0px;
+    }
+
+    .autocomplete {
+        width: 610px;
+        max-width: 610px;
+        height: 200px;
+        border-radius: 30px;
+        border: 1px solid #572ee5;
+        background-color: #fff;
+        position: absolute;
+        margin-left: 40px;
+        margin-top: -1px;
+    }
+
+    li {
+        height: 40px;
+        width: 609px;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        padding-left: 20px;
+        font-family: "Roboto", sans-serif;
+        font-size: 1.8em;
+        color: #3f3f3f;
+    }
+    
+    li:first-child {
+        margin-top: -0.8px;
+        border-radius: 30px 30px 0px 0px;
+    }
+    
+    li:last-child {
+        border-radius: 0px 0px 30px 30px;
+        height: 39px;
+    }
+    
+    li > .search-icon {
+        padding-right: 10px;
+    }
+    
+    li:hover {
+        background-color: #3130336c;
+        color: #fff;
+        cursor: pointer;
     }
 
 }

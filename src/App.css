@@ -12,6 +12,7 @@ html {
 
 .App {
   border-top: 5px solid #6809e1;
+  transition: ease-in-out 0.5s;
 }
 
 .App.dark {

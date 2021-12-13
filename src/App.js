@@ -9,7 +9,7 @@ import './App.css';
 function App() {
 
   const {darkTheme} = useContext(ThemeContext);
-  
+  const [autocomplete, setAutocomplete] = useState([]);
   const [dataGif, setDataGif] = useState([]);
   const [inputSearch, setInputSearch] = useState("");
   const [searchBtn, setSearchBtn] = useState(false);
@@ -18,12 +18,17 @@ function App() {
     setInputSearch(e.target.value);
   };
 
-  const handleClick = (searchBtn) => {
-    setSearchBtn(!searchBtn);
-}
+  const handleClickBtn = (searchBtn) => {
+    setSearchBtn(!searchBtn)
+  };
+
+  const handleClick = () => {
+    setInputSearch("");
+  };
 
   const handleSubmit = (e) => { 
     e.preventDefault();
+    getGifs(inputSearch);
     setInputSearch("");
     setSearchBtn(false);
   }
@@ -46,7 +51,7 @@ useEffect(() => {
   getTrendingGifs();
 }, [])
 
-const getGifs = (inputSearch) => {
+const getGifs = () => {
   fetch(`${API_URL}${RESOURCES.SEARCH}?api_key=${API_KEY}&q=${inputSearch}&limit=12`)
   .then(response => response.json())
   .then((data) => {
@@ -55,28 +60,37 @@ const getGifs = (inputSearch) => {
   })
   .catch(error => console.error(error));
 };
+
+
+ useEffect(() => {
+   if(searchBtn) {
+     getGifs(inputSearch);
+   }
+ }, [inputSearch, searchBtn]);
+
+
+ const autocompleteList = (v) => {
+   fetch(
+     `${API_URL}${RESOURCES.AUTOCOMPLETE}?api_key=${API_KEY}&q=${v}&limit=5`
+     )
+     .then((res) => {
+       return res.json();
+     })
+     .then((results) => {
+       setAutocomplete(results.data);
+     })
+     .catch((err) => {
+      console.error(err) 
+     });
+  };
+
   useEffect(() => {
-      if(searchBtn === true) {
-      setDataGif(inputSearch);
-      } 
-    }, [searchBtn, inputSearch]);
-
-
-useEffect(() => {
-  let petition = fetch(
-    `${API_URL}${RESOURCES.AUTOCOMPLETE}?api_key=${API_KEY}&q=${setInputSearch}&limit=5`
-    );
-
-  petition.then((res) => {
-    return res.json();
-  })
-  .then((res) => { 
-    console.log(res);
-    res.data.forEach((item) => {
-      console.log(item.title);
-    }); 
-  });
-}, [setInputSearch]);
+    if(inputSearch.length >= 2) {
+      autocompleteList(inputSearch);
+    } else {
+      setAutocomplete([]);
+    }
+  }, [inputSearch]);
 
   return (
     <div className={`App ${darkTheme ? "dark" : "light"}`}>
@@ -84,12 +98,15 @@ useEffect(() => {
         <SearchSection 
           handleChange={handleChangeInput}
           handleSubmit={handleSubmit}
-          input={inputSearch}
+          handleClick={handleClick}
+          inputSearch={inputSearch}
           displayInput={setInputSearch}
           displaySearch={setSearchBtn}
           search={searchBtn}
-          handleClick={handleClick}
-
+          handleClickBtn={handleClickBtn}
+          autocomplete={autocomplete}
+          setAutocomplete={setAutocomplete}
+          getGifs={getGifs}
         />
         <ResultsSection 
         dataGif={dataGif}
