@@ -154,7 +154,8 @@ h1.dark, h2.dark {
     }
 
     h2 {
-        font-size: 2.8em;
+        font-size: 3.2em;
+        font-weight: 500;
         line-height: 2.3em;
         padding-top: 50px;
     }
@@ -192,6 +193,14 @@ h1.dark, h2.dark {
         width: 90px;
         padding: 15px 15px;
         margin-top: 0px;
+    }
+
+    .auto.dark > .autocomplete {
+        background-color: #444040;
+    }
+
+    .auto.dark > .autocomplete li {
+        color: #ffff;
     }
 
     .autocomplete {

@@ -11,7 +11,8 @@ function App() {
   const {darkTheme} = useContext(ThemeContext);
   const [autocomplete, setAutocomplete] = useState([]);
   const [dataGif, setDataGif] = useState([]);
-  const [results, setResults] = useState(null);
+  const [resultsText, setResultsText] = useState(false);
+  const [count, setCount] = useState(null);
   const [inputSearch, setInputSearch] = useState("");
   const [searchBtn, setSearchBtn] = useState(false);
 
@@ -42,7 +43,6 @@ useEffect(() => {
         `${API_URL}${RESOURCES.TRENDING}?api_key=${API_KEY}&limit=12`
         );
         const data = await response.json();
-
         // Setteamos el array de trending
         setDataGif(data.data);
     } catch (err) {
@@ -52,14 +52,14 @@ useEffect(() => {
   getTrendingGifs();
 }, [])
 
-const getGifs = () => {
-  fetch(`${API_URL}${RESOURCES.SEARCH}?api_key=${API_KEY}&q=${inputSearch}&limit=12`)
+const getGifs = (v) => {
+   fetch(`${API_URL}${RESOURCES.SEARCH}?api_key=${API_KEY}&q=${v}&limit=12`)
   .then(response => response.json())
   .then((data) => {
     setDataGif(data.data);
     setSearchBtn(false);
-    // numero de resultados al buscar
-    setResults(data.pagination.count);
+    setResultsText(true);
+    setCount(data.pagination.count);
   })
   .catch(error => console.error(error));
 };
@@ -106,13 +106,12 @@ const getGifs = () => {
           displayInput={setInputSearch}
           handleClickBtn={handleClickBtn}
           autocomplete={autocomplete}
-          dataGif={dataGif}
-          displayDataGif={setDataGif}
-          setResults={setResults}
+          getGifs={getGifs}
+          resultsText={resultsText}
         />
         <ResultsSection 
         dataGif={dataGif}
-        results={results}
+        count={count}
          />
     </div>
   );

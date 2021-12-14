@@ -8,30 +8,16 @@ import { ThemeContext } from "../Context/ThemeContext";
 import {useContext} from "react";
 
 
-function ResultMessage({ displayDataGif, setResults, results, dataGif }) {
-    if (displayDataGif.length > 0) {
-      return "Resultados de la búsqueda";
-    }
-    if (displayDataGif.length > 0 && results > 0) {
-      return "Resultados de la búsqueda";
-    }
-    if (dataGif.length === 0) {
-      return "Empieza tu búsqueda";
-    }
-  };
-
 function SearchSection({
     autocomplete, 
     inputSearch, 
     handleChange, 
     handleClickBtn, 
     handleSubmit, 
-    results, 
     handleClick, 
     displayInput, 
-    dataGif,
-    displayDataGif,
-    setResults,
+    resultsText,
+    getGifs
 }) { 
 
     
@@ -62,15 +48,19 @@ function SearchSection({
                    <img className="search-icon-btn" src={searchIconBtn} alt="searchIcon"></img>
                 </button> 
                 </form>
-
+                <div className={`auto ${darkTheme ? "dark" : "light"}`}>
                 <ul
                 className={`${autocomplete.length > 0 && "autocomplete"}`}
                 onClick={handleClickBtn}
                 >
                     {autocomplete &&
                         autocomplete.map((gif) => {
+                            const handleAutocomplete = () => {
+                                getGifs(gif.name);
+                                displayInput("");
+                            }
                             return (
-                                <li key={gif.name} onClick={() => displayInput(gif.name)}>
+                                <li key={gif.name} onClick={handleAutocomplete}>
                                 <img className="search-icon" src={searchIcon} alt="search-icon" />
                                 {gif.name}
                                 </li>
@@ -78,9 +68,11 @@ function SearchSection({
                         })
                     }
                 </ul>
+                </div>
+                
             </div>
             <h2 className={`result-title ${darkTheme ? "dark" : "light"}`}>
-            <ResultMessage dataGif={dataGif} displayDataGif={displayDataGif} results={results} setResults={setResults}></ResultMessage>
+            {`${resultsText ? "Resultados de la búsqueda" : "Realiza tu búsqueda"}`}
             </h2>
         </div> 
     )
