@@ -42,7 +42,7 @@ useEffect(() => {
       const response = await fetch(
         `${API_URL}${RESOURCES.TRENDING}?api_key=${API_KEY}&limit=12`
         );
-        const data = await response.json();
+        const data = await response.json();  
         // Setteamos el array de trending
         setDataGif(data.data);
     } catch (err) {

@@ -16,7 +16,7 @@ function ResultsSection({dataGif, count}) {
                 return (
                     <Gif
                         key={item.id}
-                        url={item.images.downsized_medium.url}
+                        url={item.images.fixed_width_downsampled.url}
                         alt={item.title}
                         link={item.url}
                     />
